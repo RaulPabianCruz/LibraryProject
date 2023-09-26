@@ -22,7 +22,7 @@ function addBookToLibrary(bookObject){
 
 function displayLibrary(){
     const libraryDisplay = document.querySelector(".library");
-    for(let entry in myLibrary){
+    for(const entry of myLibrary){
         const book = createBookElement(entry);
         libraryDisplay.appendChild(book);
     }
@@ -33,11 +33,11 @@ function createBookElement(bookObject){
     book.classList.add("book-container");
 
     const titleTxt = document.createElement("h3");
-    titleTxt.textContent = bookObject.title;
+    titleTxt.textContent = "Title: " + bookObject.title;
     book.appendChild(titleTxt);
 
     const authorTxt = document.createElement("h4");
-    authorTxt.textContent = bookObject.author;
+    authorTxt.textContent = "Author: " + bookObject.author;
     book.appendChild(authorTxt);
 
     const pageCountTxt = document.createElement("h4");
@@ -45,7 +45,7 @@ function createBookElement(bookObject){
     book.appendChild(pageCountTxt);
 
     const readStatusTxt = document.createElement("h4");
-    readStatusTxt.textContent = bookObject.readStatus;
+    readStatusTxt.textContent = "Status:" + bookObject.readStatus;
     book.appendChild(readStatusTxt);
     return book;
 }
@@ -59,10 +59,5 @@ addBookToLibrary(book1);
 addBookToLibrary(book2);
 addBookToLibrary(book3);
 addBookToLibrary(book4);
-console.log(myLibrary.toString());
 
 displayLibrary();
-/*
-let someBook = new Book("Yo I'm a book", "Me, of course", 101 , "not read yet");
-console.log(someBook.info());
-*/
