@@ -22,8 +22,8 @@ function addBookToLibrary(bookObject){
 
 function displayLibrary(){
     const libraryDisplay = document.querySelector(".library");
-    for(const entry of myLibrary){
-        const book = createBookElement(entry);
+    for(const bookObject of myLibrary){
+        const book = createBookElement(bookObject);
         libraryDisplay.appendChild(book);
     }
 }
@@ -50,6 +50,13 @@ function createBookElement(bookObject){
     return book;
 }
 
+const dialogForm = document.getElementById("add-book-dialog");
+const addBookBttn = document.querySelector(".add-book-bttn");
+addBookBttn.addEventListener("click", () => {
+    dialogForm.showModal();
+});
+
+/*
 let book1 = new Book(DUMMY_TITLE, DUMMY_AUTHOR, DUMMY_PAGE_COUNT, DUMMY_READ_STATUS);
 let book2 = new Book(DUMMY_TITLE, DUMMY_AUTHOR, DUMMY_PAGE_COUNT, DUMMY_READ_STATUS);
 let book3 = new Book(DUMMY_TITLE, DUMMY_AUTHOR, DUMMY_PAGE_COUNT, DUMMY_READ_STATUS);
@@ -59,5 +66,6 @@ addBookToLibrary(book1);
 addBookToLibrary(book2);
 addBookToLibrary(book3);
 addBookToLibrary(book4);
+*/
 
 displayLibrary();

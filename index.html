@@ -7,8 +7,30 @@
         <title>Library Project</title>
     </head>
     <body>
-        <main class="library">
-            
+        <main class="library">     
         </main>
+        <div class="button-container">
+            <button class="add-book-bttn">Add New Book</button>
+        </div>
+        <dialog id="add-book-dialog">
+            <form>
+                <div class="form-section">
+                    <label for="author">Author:</label>
+                    <input type="text" id="author" required>
+                </div>
+                <div class="form-section">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" required>
+                </div>
+                <div class="form-section">
+                    <label for="page-count">Page Count:</label>
+                    <input type="number" id="page-count" required>
+                </div>
+                <div class="form-section">
+                    <label for="read-status">Read Status:</label>
+                    <input type="text" id="read-status" required>
+                </div>
+            </form>
+        </dialog>
     </body>
 </html>
