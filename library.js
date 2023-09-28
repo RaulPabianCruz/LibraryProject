@@ -1,19 +1,10 @@
 const myLibrary = [];
-const DUMMY_TITLE = "dummy title";
-const DUMMY_AUTHOR = "dummy author";
-const DUMMY_PAGE_COUNT = "420";
-const DUMMY_READ_STATUS = "not read... yet";
 
 function Book(title, author, pageCount, readStatus){
     this.title = title;
     this.author = author;
     this.pageCount = pageCount;
     this.readStatus = readStatus; 
-    this.info = function() {
-        let infoString = this.title + ", " + this.author + ", "
-                    + pageCount + ", " + this.readStatus;
-        return infoString;
-    }
 }
 
 function addBookToLibrary(bookObject){
@@ -22,8 +13,8 @@ function addBookToLibrary(bookObject){
 
 function displayLibrary(){
     const libraryDisplay = document.querySelector(".library");
-    for(const bookObject of myLibrary){
-        const book = createBookElement(bookObject);
+    for(let i = 0; i < myLibrary.length; i++){
+        const book = createBookElement(myLibrary[i], i);
         libraryDisplay.appendChild(book);
     }
 }
@@ -33,7 +24,7 @@ function resetLibrary(){
     libraryDisplay.replaceChildren();
 }
 
-function createBookElement(bookObject){
+function createBookElement(bookObject, index){
     const book = document.createElement("div");
     book.classList.add("book-container");
 
@@ -52,7 +43,24 @@ function createBookElement(bookObject){
     const readStatusTxt = document.createElement("h4");
     readStatusTxt.textContent = "Status:" + bookObject.readStatus;
     book.appendChild(readStatusTxt);
+
+    book.setAttribute("data-index", index);
+
+    const deleteBttn = document.createElement("button");
+    deleteBttn.textContent = "Delete"
+    deleteBttn.addEventListener("click", deleteBook);
+    book.appendChild(deleteBttn);
     return book;
+}
+
+function deleteBook(event){
+    const libraryDisplay = document.querySelector(".library");
+    const bookNode = event.target.parentNode;
+    const index = Number(bookNode.getAttribute("data-index"));
+    myLibrary.splice(index, 1);
+    libraryDisplay.removeChild(bookNode);
+    resetLibrary();
+    displayLibrary();
 }
 
 const dialogForm = document.getElementById("add-book-dialog");
@@ -82,4 +90,13 @@ addBttn.addEventListener("click", (event) => {
     dialogForm.close();
 });
 
+
+const sampleBook1 = new Book("Me", "Sample Book 1", 50, "Not Read");
+addBookToLibrary(sampleBook1);
+const sampleBook2 = new Book("Me", "Sample Book 2", 45, "Not Read");
+addBookToLibrary(sampleBook1);
+const sampleBook3 = new Book("Me", "Sample Book 3", 60, "Not Read");
+addBookToLibrary(sampleBook1);
+const sampleBook4 = new Book("Me", "Sample Book 4", 34, "Not Read");
+addBookToLibrary(sampleBook1);
 displayLibrary();
