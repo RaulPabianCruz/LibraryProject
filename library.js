@@ -7,6 +7,13 @@ function Book(title, author, pageCount, readStatus){
     this.readStatus = readStatus; 
 }
 
+Book.prototype.toggleReadStatus = function() {
+    if(this.readStatus === "Read")
+        this.readStatus = "Not Read";
+    else
+        this.readStatus = "Read";
+}
+
 function addBookToLibrary(bookObject){
     myLibrary.push(bookObject);
 }
@@ -41,6 +48,7 @@ function createBookElement(bookObject, index){
     book.appendChild(pageCountTxt);
 
     const readStatusTxt = document.createElement("h4");
+    readStatusTxt.classList.add("read-status");
     readStatusTxt.textContent = "Status:" + bookObject.readStatus;
     book.appendChild(readStatusTxt);
 
@@ -50,6 +58,12 @@ function createBookElement(bookObject, index){
     deleteBttn.textContent = "Delete"
     deleteBttn.addEventListener("click", deleteBook);
     book.appendChild(deleteBttn);
+
+    const readStatusBttn = document.createElement("button");
+    readStatusBttn.textContent = "Toggle Read Status";
+    readStatusBttn.addEventListener("click", toggleReadStatusDisplay);
+    book.appendChild(readStatusBttn);
+
     return book;
 }
 
@@ -61,6 +75,17 @@ function deleteBook(event){
     libraryDisplay.removeChild(bookNode);
     resetLibrary();
     displayLibrary();
+}
+
+function toggleReadStatusDisplay(event) {
+    const bookNode = event.target.parentNode;
+    const index = Number(bookNode.getAttribute("data-index"));
+    const bookObject = myLibrary[index];
+    
+    bookObject.toggleReadStatus();
+
+    const readStatusTxt = bookNode.querySelector(".read-status");
+    readStatusTxt.textContent = "Status: " + bookObject.readStatus;
 }
 
 const dialogForm = document.getElementById("add-book-dialog");
