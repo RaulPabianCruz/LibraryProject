@@ -10,8 +10,9 @@
         <main class="library">     
         </main>
         <div class="button-container">
-            <button class="add-book-bttn">Add New Book</button>
+            <button class="new-book">Add New Book</button>
         </div>
+        
         <dialog id="add-book-dialog">
             <form>
                 <div class="form-section">
@@ -28,9 +29,17 @@
                 </div>
                 <div class="form-section">
                     <label for="read-status">Read Status:</label>
-                    <input type="text" id="read-status" required>
+                    <select id="read-status" name="readStatus" required>
+                        <option value="Read">Read</option>
+                        <option value="Not Read">Not Read</option>
+                    </select>
+                </div>
+                <div class="form-section">
+                    <button type="submit" formmethod="dialog" class="dialog-bttn" value="cancelled" formnovalidate>Done</button>
+                    <button id="formAddBttn" type="submit" class="dialog-bttn">Add</button>
                 </div>
             </form>
         </dialog>
+
     </body>
 </html>

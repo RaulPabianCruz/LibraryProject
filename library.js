@@ -28,6 +28,11 @@ function displayLibrary(){
     }
 }
 
+function resetLibrary(){
+    const libraryDisplay = document.querySelector(".library");
+    libraryDisplay.replaceChildren();
+}
+
 function createBookElement(bookObject){
     const book = document.createElement("div");
     book.classList.add("book-container");
@@ -51,21 +56,30 @@ function createBookElement(bookObject){
 }
 
 const dialogForm = document.getElementById("add-book-dialog");
-const addBookBttn = document.querySelector(".add-book-bttn");
-addBookBttn.addEventListener("click", () => {
+const authorInput = document.getElementById("author");
+const titleInput = document.getElementById("title");
+const pageCountInput = document.getElementById("page-count");
+const readStatusInput = document.getElementById("read-status");
+const addBttn = document.getElementById("formAddBttn");
+
+const openDialogBttn = document.querySelector(".new-book");
+openDialogBttn.addEventListener("click", () => {
     dialogForm.showModal();
 });
 
-/*
-let book1 = new Book(DUMMY_TITLE, DUMMY_AUTHOR, DUMMY_PAGE_COUNT, DUMMY_READ_STATUS);
-let book2 = new Book(DUMMY_TITLE, DUMMY_AUTHOR, DUMMY_PAGE_COUNT, DUMMY_READ_STATUS);
-let book3 = new Book(DUMMY_TITLE, DUMMY_AUTHOR, DUMMY_PAGE_COUNT, DUMMY_READ_STATUS);
-let book4 = new Book(DUMMY_TITLE, DUMMY_AUTHOR, DUMMY_PAGE_COUNT, DUMMY_READ_STATUS);
+dialogForm.addEventListener("close", (event) => {
+    if(dialogForm.returnValue !== "cancelled"){
+        resetLibrary();
+        displayLibrary();
+    }
+});
 
-addBookToLibrary(book1);
-addBookToLibrary(book2);
-addBookToLibrary(book3);
-addBookToLibrary(book4);
-*/
+addBttn.addEventListener("click", (event) => {
+    event.preventDefault();
+    const newBook = new Book(authorInput.value,  titleInput.value,
+                pageCountInput.value, readStatusInput.value);
+    addBookToLibrary(newBook);
+    dialogForm.close();
+});
 
 displayLibrary();

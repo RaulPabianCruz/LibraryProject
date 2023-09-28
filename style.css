@@ -58,7 +58,7 @@ body {
     flex: 1 1 auto;
 }
 
-.add-book-bttn {
+.new-book {
     background-color: lightblue;
     padding: 10px;
     border-radius: 5px;
