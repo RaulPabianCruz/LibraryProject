@@ -81,14 +81,15 @@ function toggleReadStatusDisplay(event) {
     const bookNode = event.target.parentNode;
     const index = Number(bookNode.getAttribute("data-index"));
     const bookObject = myLibrary[index];
-    
+
     bookObject.toggleReadStatus();
 
     const readStatusTxt = bookNode.querySelector(".read-status");
     readStatusTxt.textContent = "Status: " + bookObject.readStatus;
 }
 
-const dialogForm = document.getElementById("add-book-dialog");
+const dialogElement = document.getElementById("add-book-dialog");
+const addBookForm = document.querySelector(".add-book-form");
 const authorInput = document.getElementById("author");
 const titleInput = document.getElementById("title");
 const pageCountInput = document.getElementById("page-count");
@@ -97,11 +98,12 @@ const addBttn = document.getElementById("formAddBttn");
 
 const openDialogBttn = document.querySelector(".new-book");
 openDialogBttn.addEventListener("click", () => {
-    dialogForm.showModal();
+    addBookForm.reset();
+    dialogElement.showModal();
 });
 
-dialogForm.addEventListener("close", (event) => {
-    if(dialogForm.returnValue !== "cancelled"){
+dialogElement.addEventListener("close", (event) => {
+    if(dialogElement.returnValue !== "cancelled"){
         resetLibrary();
         displayLibrary();
     }
@@ -112,7 +114,7 @@ addBttn.addEventListener("click", (event) => {
     const newBook = new Book(authorInput.value,  titleInput.value,
                 pageCountInput.value, readStatusInput.value);
     addBookToLibrary(newBook);
-    dialogForm.close();
+    dialogElement.close();
 });
 
 
