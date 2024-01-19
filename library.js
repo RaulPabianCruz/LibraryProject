@@ -36,6 +36,7 @@ function resetLibraryDisplay(){
 function createBookElement(bookObject, index){
     const book = document.createElement("div");
     book.classList.add("book-container");
+    book.setAttribute("data-index", index);
 
     const titleTxt = document.createElement("h3");
     titleTxt.textContent = "Title: " + bookObject.title;
@@ -54,8 +55,6 @@ function createBookElement(bookObject, index){
     readStatusTxt.textContent = "Status:" + bookObject.readStatus;
     book.appendChild(readStatusTxt);
 
-    book.setAttribute("data-index", index);
-
     const deleteBttn = document.createElement("button");
     deleteBttn.textContent = "Delete"
     deleteBttn.addEventListener("click", deleteBook);
@@ -70,11 +69,9 @@ function createBookElement(bookObject, index){
 }
 
 function deleteBook(event){
-    const libraryDisplay = document.querySelector(".library");
     const bookNode = event.target.parentNode;
     const index = Number(bookNode.getAttribute("data-index"));
     libraryArray.splice(index, 1);
-    libraryDisplay.removeChild(bookNode);
     resetLibraryDisplay();
     displayLibrary();
 }
@@ -97,6 +94,20 @@ const titleInput = document.getElementById("title");
 const pageCountInput = document.getElementById("page-count");
 const readStatusInput = document.getElementById("read-status");
 const addBttn = document.getElementById("formAddBttn");
+const doneBttn = document.getElementById('done-bttn');
+
+function isFormValid(){
+    if(
+        authorInput.checkValidity() &&
+        titleInput.checkValidity() &&
+        pageCountInput.checkValidity() &&
+        readStatusInput.checkValidity()
+    ){
+        return true;
+    } else{
+        return false;
+    }
+}
 
 const openDialogBttn = document.querySelector(".new-book");
 openDialogBttn.addEventListener("click", () => {
@@ -104,21 +115,52 @@ openDialogBttn.addEventListener("click", () => {
     dialogElement.showModal();
 });
 
-dialogElement.addEventListener("close", (event) => {
-    if(dialogElement.returnValue !== "cancelled"){
+authorInput.addEventListener('input', () => {
+    let mssg = document.querySelector('#author + .error-mssg');
+    if(authorInput.validity.valueMissing){
+        mssg.textContent = 'Please input a name for the author';
+        authorInput.classList.add('error');
+    } else {
+        mssg.textContent = '';
+        authorInput.classList.remove('error');
+    }
+});
+
+titleInput.addEventListener('input', () => {
+    let mssg = document.querySelector('#title + .error-mssg');
+    if(titleInput.validity.valueMissing){
+        mssg.textContent = 'Please input a name for the book';
+        titleInput.classList.add('error');
+    } else {
+        mssg.textContent = '';
+        titleInput.classList.remove('error');
+    }
+});
+
+pageCountInput.addEventListener('input', () => {
+    let mssg = document.querySelector('#page-count + .error-mssg');
+    if(pageCountInput.validity.valueMissing){
+        mssg.textContent = 'Please input a page count for the book';
+        pageCountInput.classList.add('error');
+    } else {
+        mssg.textContent = '';
+        pageCountInput.classList.remove('error');
+    }
+});
+
+doneBttn.addEventListener('click', () => dialogElement.close());
+
+addBttn.addEventListener("click", (event) => {
+    event.preventDefault();
+    if(isFormValid()){
+        const newBook = new Book(authorInput.value,  titleInput.value,
+                    pageCountInput.value, readStatusInput.value);
+        addBookToLibraryArray(newBook);
+        dialogElement.close();
         resetLibraryDisplay();
         displayLibrary();
     }
 });
-
-addBttn.addEventListener("click", (event) => {
-    event.preventDefault();
-    const newBook = new Book(authorInput.value,  titleInput.value,
-                pageCountInput.value, readStatusInput.value);
-    addBookToLibraryArray(newBook);
-    dialogElement.close();
-});
-
 
 const sampleBook1 = new Book("Me", "Sample Book 1", 50, "Not Read");
 addBookToLibraryArray(sampleBook1);

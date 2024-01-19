@@ -14,18 +14,21 @@
         </div>
         
         <dialog id="add-book-dialog">
-            <form class="add-book-form">
+            <form class="add-book-form" novalidate>
                 <div class="form-section">
                     <label for="author">Author:</label>
                     <input type="text" id="author" required>
+                    <span class="error-mssg"></span>
                 </div>
                 <div class="form-section">
                     <label for="title">Title:</label>
                     <input type="text" id="title" required>
+                    <span class="error-mssg"></span>
                 </div>
                 <div class="form-section">
                     <label for="page-count">Page Count:</label>
                     <input type="number" id="page-count" required>
+                    <span class="error-mssg"></span>
                 </div>
                 <div class="form-section">
                     <label for="read-status">Read Status:</label>
@@ -33,9 +36,10 @@
                         <option value="Read">Read</option>
                         <option value="Not Read">Not Read</option>
                     </select>
+                    <span class="error-mssg"></span>
                 </div>
-                <div class="form-section">
-                    <button type="submit" formmethod="dialog" class="dialog-bttn" value="cancelled" formnovalidate>Done</button>
+                <div class="form-section bttn-section">
+                    <button id="done-bttn" type="button" class="dialog-bttn">Done</button>
                     <button id="formAddBttn" type="submit" class="dialog-bttn">Add</button>
                 </div>
             </form>
